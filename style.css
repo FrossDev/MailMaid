@@ -1,0 +1,167 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    width: 320px;
+    min-height: 360px;
+    font-family: Arial, sans-serif;
+    background: #f5f7fb;
+    color: #202124;
+}
+
+.container {
+    padding: 22px;
+}
+
+h1 {
+    margin: 0;
+    font-size: 24px;
+    text-align: center;
+}
+
+.subtitle {
+    margin: 6px 0 20px;
+    text-align: center;
+    color: #6b7280;
+    font-size: 13px;
+}
+
+.card {
+    background: white;
+    padding: 18px;
+    border-radius: 14px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.input-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+#interval {
+    width: 90px;
+    padding: 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 16px;
+    outline: none;
+}
+
+#interval:focus {
+    border-color: #4285f4;
+}
+
+.input-row span {
+    color: #6b7280;
+}
+
+.switch-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0;
+}
+
+.switch-row input {
+    display: none;
+}
+
+.switch {
+    width: 42px;
+    height: 23px;
+    background: #d1d5db;
+    border-radius: 20px;
+    position: relative;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.switch::after {
+    content: "";
+    position: absolute;
+    width: 19px;
+    height: 19px;
+    background: white;
+    border-radius: 50%;
+    left: 2px;
+    top: 2px;
+    transition: 0.2s;
+}
+
+.switch-row input:checked + .switch {
+    background: #4285f4;
+}
+
+.switch-row input:checked + .switch::after {
+    transform: translateX(19px);
+}
+
+.clean-button {
+    width: 100%;
+    margin-top: 18px;
+    padding: 12px;
+    border: none;
+    border-radius: 9px;
+    background: #4285f4;
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.clean-button:hover {
+    background: #3367d6;
+}
+
+.clean-button:disabled {
+    opacity: 0.6;
+    cursor: default;
+}
+
+.status-card {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+    padding: 12px 14px;
+    background: white;
+    border-radius: 10px;
+    font-size: 13px;
+}
+
+.status-label {
+    color: #6b7280;
+}
+
+#status {
+    font-weight: 600;
+}
+
+.settings-button {
+    width: 100%;
+    margin-top: 10px;
+    padding: 11px;
+    border: 1px solid #d1d5db;
+    border-radius: 9px;
+    background: white;
+    color: #202124;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.settings-button:hover {
+    background: #f3f4f6;
+}

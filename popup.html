@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>MailMaid</title>
+
+    <style>
+        body {
+            width: 340px;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f7fa;
+            color: #202124;
+        }
+
+        .header {
+            background: #ffffff;
+            padding: 18px 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .title {
+            font-size: 21px;
+            font-weight: bold;
+        }
+
+        .subtitle {
+            margin-top: 4px;
+            font-size: 12px;
+            color: #777;
+        }
+
+        .content {
+            padding: 16px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+        }
+
+        .status-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .status-left {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            font-weight: bold;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #999;
+        }
+
+        .dot.on {
+            background: #20a464;
+        }
+
+        .dot.scanning {
+            background: #4285f4;
+        }
+
+        .countdown {
+            font-size: 28px;
+            font-weight: bold;
+            margin-top: 14px;
+        }
+
+        .countdown-label {
+            font-size: 12px;
+            color: #777;
+        }
+
+        .progress-text {
+            margin-top: 12px;
+            font-size: 13px;
+            color: #555;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 7px;
+            background: #e8eaed;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+
+        .progress {
+            height: 100%;
+            width: 0%;
+            background: #4285f4;
+            transition: width 0.2s;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .stat {
+            background: #f8f9fa;
+            border-radius: 9px;
+            padding: 12px;
+        }
+
+        .stat-number {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: #777;
+            margin-top: 3px;
+        }
+
+        .last-scan {
+            font-size: 12px;
+            color: #777;
+            margin-top: 12px;
+        }
+
+        .rate-line {
+            margin-top: 6px;
+            font-size: 12px;
+            color: #777;
+        }
+
+        .rate-line.on-goal {
+            color: #20a464;
+            font-weight: bold;
+        }
+
+        button {
+            width: 100%;
+            border: none;
+            border-radius: 9px;
+            padding: 11px;
+            font-size: 14px;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+
+        #clean {
+            background: #4285f4;
+            color: white;
+            font-weight: bold;
+        }
+
+        #clean:disabled {
+            background: #aeb8c5;
+            cursor: default;
+        }
+
+        #settings {
+            background: #e8eaed;
+            color: #333;
+        }
+
+        .interval-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 14px;
+            font-size: 13px;
+        }
+
+        #interval {
+            width: 60px;
+            padding: 6px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .toggle-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .toggle-label {
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .small {
+            font-size: 11px;
+            color: #777;
+            margin-top: 3px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <div class="title">MailMaid</div>
+        <div class="subtitle">
+            Automatically organize your Gmail
+        </div>
+    </div>
+
+
+    <div class="content">
+
+        <!-- AUTO CLEAN CARD -->
+        <div class="card">
+
+            <div class="status-row">
+
+                <div class="status-left">
+                    <div id="statusDot" class="dot"></div>
+
+                    <span id="statusTitle">
+                        Auto Clean OFF
+                    </span>
+                </div>
+
+                <input
+                    type="checkbox"
+                    id="autoClean"
+                >
+
+            </div>
+
+
+            <div
+                id="countdown"
+                class="countdown"
+            >
+                —
+            </div>
+
+            <div
+                id="countdownLabel"
+                class="countdown-label"
+            >
+                Auto Clean is off
+            </div>
+
+
+            <div
+                id="progressText"
+                class="progress-text"
+            >
+                Waiting
+            </div>
+
+
+            <div class="progress-bar">
+                <div
+                    id="progress"
+                    class="progress"
+                ></div>
+            </div>
+
+
+            <div
+                id="rate"
+                class="rate-line"
+            >
+                Rate: —
+            </div>
+
+
+            <div class="interval-row">
+
+                <span>
+                    Scan every
+                </span>
+
+                <span>
+                    <input
+                        type="number"
+                        id="interval"
+                        min="1"
+                        value="1"
+                    >
+                    minute(s)
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- STATS CARD -->
+        <div class="card">
+
+            <div class="stats">
+
+                <div class="stat">
+                    <div
+                        id="checked"
+                        class="stat-number"
+                    >
+                        0
+                    </div>
+
+                    <div class="stat-label">
+                        Checked
+                    </div>
+                </div>
+
+
+                <div class="stat">
+                    <div
+                        id="matched"
+                        class="stat-number"
+                    >
+                        0
+                    </div>
+
+                    <div class="stat-label">
+                        Matched
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div
+                id="lastScan"
+                class="last-scan"
+            >
+                Last scan: Never
+            </div>
+
+        </div>
+
+
+        <button id="clean">
+            Clean Now
+        </button>
+
+
+        <button id="settings">
+            ⚙ Manage Rules
+        </button>
+
+    </div>
+
+
+    <script src="popup.js"></script>
+
+</body>
+</html>
