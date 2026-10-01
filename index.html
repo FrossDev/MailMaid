@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MailMaid — Install</title>
+<style>
+  body { font-family: Segoe UI, Arial, sans-serif; max-width: 640px; margin: 40px auto; padding: 0 20px; background: #f8f9fa; color: #202124; }
+  .card { background: #fff; border-radius: 12px; padding: 32px; box-shadow: 0 2px 12px rgba(0,0,0,.1); text-align: center; }
+  h1 { margin: 0 0 8px; font-size: 32px; }
+  p.sub { color: #5f6368; margin-top: 0; }
+  button.big { font-size: 20px; padding: 14px 40px; border: 0; border-radius: 8px; background: #1a73e8; color: #fff; cursor: pointer; margin: 12px 4px; }
+  button.big:hover { background: #1765cc; }
+  button.ghost { font-size: 16px; padding: 10px 24px; border: 1px solid #dadce0; border-radius: 8px; background: #fff; cursor: pointer; margin: 12px 4px; }
+  ol { text-align: left; line-height: 1.9; }
+  code { background: #f1f3f4; padding: 2px 6px; border-radius: 4px; }
+  #status { margin-top: 16px; color: #5f6368; min-height: 24px; }
+  .warn { background: #fef7e0; border: 1px solid #f9ab00; border-radius: 8px; padding: 12px; margin-top: 20px; font-size: 14px; text-align: left; }
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>🧹 MailMaid</h1>
+  <p class="sub">Automatically clean your Gmail using your own rules.</p>
+
+  <button class="big" id="installBtn">Install MailMaid</button><br>
+  <button class="ghost" id="scriptBtn">Download installer script (.ps1) instead</button>
+
+  <div id="status"></div>
+
+  <ol>
+    <li>Click <b>Install MailMaid</b> above — the extension zip downloads.</li>
+    <li>Unzip it anywhere (Right-click → <b>Extract All</b>).</li>
+    <li>Open <code>chrome://extensions</code>, turn ON <b>Developer mode</b>.</li>
+    <li>Click <b>Load unpacked</b> → select the unzipped <code>MailMaid/</code> folder.</li>
+    <li>Click the MailMaid icon → <b>Sign in with Google</b> → allow Gmail access.</li>
+  </ol>
+
+  <div class="warn">
+    <b>Why not fully automatic?</b> Browsers block websites from writing files
+    outside Downloads, running PowerShell, or opening
+    <code>chrome://extensions</code> for you — that would be a malware hole.
+    The <code>install-mailmaid.ps1</code> script (in this repo) does all of that
+    because it runs <i>on your PC</i>, not in the browser. This page is the
+    closest a website is allowed to get: one click to download, then the
+    30-second manual finish above.
+  </div>
+</div>
+
+<script>
+var REPO = "FrossDev/MailMaid";
+var statusEl = document.getElementById("status");
+
+document.getElementById("installBtn").onclick = function () {
+  statusEl.textContent = "Finding the newest release…";
+  fetch("https://api.github.com/repos/" + REPO + "/releases/latest")
+    .then(function (r) {
+      if (!r.ok) throw new Error("No releases yet (HTTP " + r.status + ")");
+      return r.json();
+    })
+    .then(function (rel) {
+      var zip = (rel.assets || []).filter(function (a) {
+        return /^MailMaid-.*\.zip$/i.test(a.name);
+      })[0];
+      if (!zip) throw new Error("Release has no MailMaid-*.zip asset yet.");
+      statusEl.textContent = "Downloading " + zip.name + " …";
+      var a = document.createElement("a");
+      a.href = zip.browser_download_url;
+      a.download = zip.name;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      statusEl.textContent = "Downloaded! Now unzip it and follow steps 3–5 above.";
+    })
+    .catch(function (err) {
+      statusEl.textContent = "Could not auto-download: " + err.message +
+        " — use Code → Download ZIP on GitHub instead.";
+    });
+};
+
+document.getElementById("scriptBtn").onclick = function () {
+  var a = document.createElement("a");
+  a.href = "https://github.com/" + REPO + "/raw/main/install-mailmaid.ps1";
+  a.download = "install-mailmaid.ps1";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  statusEl.textContent = "Script downloaded — Right-click it → Run with PowerShell.";
+};
+</script>
+</body>
+</html>
