@@ -15,10 +15,10 @@ No app passwords. Sign-in is plain Google OAuth.
 
 ## Important: this OAuth client id is the developer's
 
-`manifest.json` ships with a `key` + `oauth2.client_id` that belongs to this
+`manifest.json` ships with an `oauth2.client_id` that belongs to this
 repo's author. It works for trying the extension, but if you publish your own
 copy (Chrome Web Store, or your own GitHub fork that other people install),
-**replace both with your own**:
+**replace it with your own** (and add your extension `key`):
 
 1. https://console.cloud.google.com → new project.
 2. APIs & Services → enable **Gmail API**.
@@ -39,9 +39,6 @@ required Gmail-scope verification (Restricted scopes: `gmail.modify`,
 - `background.js` – service worker: scan engine, quota bucket, retry/back-off.
 - `popup.html` / `popup.js` / `style.css` – toolbar panel.
 - `settings.html` / `settings.js` / `settings.css` – rules editor.
-- `appsscript/` – Gmail add-on port (same engine, runs inside Gmail;
-  Phase 0 done, Engine/Rules pending). Each user installs their own copy;
-  see `appsscript/README.md`.
 
 ## License
 
