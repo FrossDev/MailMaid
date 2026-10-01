@@ -1,6 +1,11 @@
 # MailMaid (Chrome extension)
 
-Automatically clean your Gmail using your own rules.
+Tired of drowning in promo mail, newsletters, and notifications? MailMaid
+automatically cleans your Gmail using rules *you* define — match by sender,
+subject, or age, then archive, delete, label, or forward. Runs on your own
+machine on a schedule (Auto Clean) or on demand (Clean Now), signs in with
+plain Google OAuth (no app passwords), and never sends your mail anywhere but
+where your rules say.
 
 👉 **Install: https://frossdev.github.io/MailMaid/** — one click to download,
 then 30 seconds in `chrome://extensions`. No git needed.
