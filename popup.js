@@ -189,7 +189,11 @@ function updateStatus() {
                 $("statusDot").className =
                     "dot on";
 
-                if (response.nextScanTime) {
+                if (isRunning) {
+                    /* Freeze the countdown while the scan runs. */
+                    $("countdown").textContent = "\u2026";
+                    $("countdownLabel").textContent = "Scan in progress";
+                } else if (response.nextScanTime) {
                     updateCountdown(
                         response.nextScanTime
                     );
@@ -268,6 +272,14 @@ function updateStatus() {
 }
 
 function updateCountdown(nextScanTime) {
+    /*
+     * While a scan is running the countdown is hidden: the timer restarts
+     * when the scan finishes, so there is nothing to count down to.
+     */
+    if (isRunning) {
+        return;
+    }
+
     var remaining =
         nextScanTime - Date.now();
 

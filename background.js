@@ -1956,6 +1956,7 @@ async function runRules() {
 
     safeSendMessage({ action: "cleanStarted" });
 
+
     try {
         var stored = await chrome.storage.local.get([
             "cleanerRules",
@@ -2037,6 +2038,16 @@ async function runRules() {
 
         await applyOutcomes(outcomes);
         await commitRunState(watermark);
+
+        /*
+         * The countdown restarts when the scan FINISHES, not when it starts.
+         * nextScanTime is a finish timestamp plus one interval, so a long scan
+         * can never push the countdown to zero mid run.
+         */
+        chrome.storage.local.set({
+            nextScanTime: Date.now() +
+                (Number(config.autoCleanInterval || 1) * 60 * 1000)
+        });
 
         scanStatus.rate = computeRate();
         scanStatus.phase = "idle";
@@ -2133,11 +2144,6 @@ chrome.alarms.onAlarm.addListener(
         if (alarm.name !== "mailMaid") {
             return;
         }
-
-        chrome.storage.local.set({
-            nextScanTime: Date.now() +
-                (Number(alarm.periodInMinutes || 1) * 60 * 1000)
-        });
 
         runRules().catch(function (error) {
             /* runRules reports its own failures; this is the last resort. */
