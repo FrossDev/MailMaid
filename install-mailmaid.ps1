@@ -46,12 +46,10 @@ Write-Host ""
 Write-Host "Done! Extension files are at:" -ForegroundColor Green
 Write-Host "  $Target"
 Write-Host ""
-Write-Host "Finish in Chrome (30 seconds, one time):"
-Write-Host "  1. Open chrome://extensions"
-Write-Host "  2. Turn ON Developer mode (top right)"
-Write-Host "  3. Click 'Load unpacked' and select:"
-Write-Host "     $Target"
+Write-Host "Opening chrome://extensions ..." -ForegroundColor Cyan
+Write-Host "Then: turn ON Developer mode (top right) -> Load unpacked ->"
+Write-Host "select the folder above, then Sign in with Google."
 Write-Host ""
-Write-Host "Press any key to open chrome://extensions ..."
-$null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+Set-Clipboard $Target
+Write-Host "(Folder path copied to clipboard - just paste it in the file picker.)" -ForegroundColor DarkGray
 Start-Process "chrome.exe" "chrome://extensions"
