@@ -1,0 +1,8 @@
+token.json
+appsscript/token.json
+client_secret*.json
+appsscript/client_secret*.json
+token*.json
+credentials*.json
+.clasprc.json
+**/.clasprc*.json
