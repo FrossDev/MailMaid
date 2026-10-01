@@ -1,0 +1,6 @@
+# one real address per line, lowercase
+# lines starting with # are ignored
+# Example:
+# friend1@gmail.com
+# friend2@gmail.com
+example.friend@gmail.com

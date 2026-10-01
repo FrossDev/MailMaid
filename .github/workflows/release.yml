@@ -1,0 +1,28 @@
+name: Release zip
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build MailMaid zip
+        run: |
+          mkdir -p dist/MailMaid
+          cp manifest.json background.js popup.html popup.js style.css \
+             settings.html settings.js settings.css \
+             icon16.png icon32.png icon48.png icon128.png \
+             README.md LICENSE dist/MailMaid/
+          cd dist && zip -r "MailMaid-${GITHUB_REF_NAME}.zip" MailMaid
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/MailMaid-*.zip
+          generate_release_notes: true

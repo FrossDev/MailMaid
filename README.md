@@ -2,17 +2,29 @@
 
 Automatically clean your Gmail using your own rules.
 
-## Install from source (5 min)
+## Install on Windows (no manual unzip)
 
-1. Clone this repo.
-2. Open `chrome://extensions`, enable **Developer mode**.
-3. **Load unpacked** → select this folder.
-4. Click the MailMaid icon → **Sign in with Google** → allow Gmail access.
-5. Open the ⚙ options page to create rules, then press **Clean Now** or turn on
+1. Download **`install-mailmaid.ps1`** from this repo
+   (`Code → Download ZIP` works, or grab just the file).
+2. Right-click it → **Run with PowerShell**.
+   - SmartScreen may warn because the script isn't signed: click
+     **More info → Run anyway** (you can read the script first — it's short).
+3. The script downloads the newest release, unzips it for you into
+   `%LOCALAPPDATA%\MailMaid`, and opens `chrome://extensions`.
+4. In Chrome: turn ON **Developer mode** (top right) → **Load unpacked** →
+   select the folder it shows you (already copied to your clipboard path).
+5. Click the MailMaid icon → **Sign in with Google** → allow Gmail access.
+6. Open the ⚙ options page to create rules, then press **Clean Now** or turn on
    **Auto Clean**.
 
-No app passwords. Sign-in is plain Google OAuth.
+No app passwords. Sign-in is plain Google OAuth. You never touch a zip.
 
+> Why the script still exists: Chrome **requires** the "Load unpacked"
+> click for anything outside the Web Store — there is no trusted way around
+> it. The only true zero-click install is publishing on the Chrome Web Store
+> ($5 one-time developer fee), which also still needs the Gmail verification
+> for `gmail.modify` / `gmail.send`. This script removes every step *before*
+> that click.
 ## Important: this OAuth client id is the developer's
 
 `manifest.json` ships with an `oauth2.client_id` that belongs to this
@@ -39,6 +51,8 @@ required Gmail-scope verification (Restricted scopes: `gmail.modify`,
 - `background.js` – service worker: scan engine, quota bucket, retry/back-off.
 - `popup.html` / `popup.js` / `style.css` – toolbar panel.
 - `settings.html` / `settings.js` / `settings.css` – rules editor.
+- `test-users/` – email list + validator for Testing-mode installs
+  (there is no auto-add bot; Google exposes no API for test users).
 
 ## License
 
