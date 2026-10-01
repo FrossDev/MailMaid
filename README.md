@@ -2,6 +2,9 @@
 
 Automatically clean your Gmail using your own rules.
 
+👉 **Install: https://frossdev.github.io/MailMaid/** — one click to download,
+then 30 seconds in `chrome://extensions`. No git needed.
+
 ## Install on Windows (no manual unzip)
 
 1. Download **`install-mailmaid.ps1`** from this repo
