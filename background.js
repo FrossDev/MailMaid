@@ -1969,7 +1969,8 @@ async function runRules() {
             "scanProcessed",
             "scanMatched",
             "scanTotal",
-            "lastRunIncomplete"
+            "lastRunIncomplete",
+            "autoCleanInterval"
         ]);
 
         var rules = (stored.cleanerRules || []).filter(function (rule) {
@@ -2046,7 +2047,7 @@ async function runRules() {
          */
         chrome.storage.local.set({
             nextScanTime: Date.now() +
-                (Number(config.autoCleanInterval || 1) * 60 * 1000)
+                (Number(stored.autoCleanInterval || 1) * 60 * 1000)
         });
 
         scanStatus.rate = computeRate();
